@@ -61,11 +61,13 @@ You will need to install the following locally:
 ## Monthly Cost Analysis
 Complete a month cost analysis of each Azure resource to give an estimate total cost using the table below:
 
-| Azure Resource | Service Tier | Monthly Cost |
-| ------------ | ------------ | ------------ |
-| *Azure Postgres Database* |     |              |
-| *Azure Service Bus*   |         |              |
-| ...                   |         |              |
+| Azure Resource | Service Tier                           | Monthly Cost |
+| ------------ |----------------------------------------|--------------|
+| *Azure Postgres Database* | Single Server - Basic - 1 vCore - 5 GB | $25.32       |
+| *Azure Service Bus*   | Basic - 1 Million                      | $0.05        |
+| *Azure Function App* | B1 plan                                | $12.41       |
+| *Azure Web App* | F1 plan                                | Free         |
+| *Total* |                                        | $37.78       |
 
 ## Architecture Explanation
-This is a placeholder section where you can provide an explanation and reasoning for your architecture selection for both the Azure Web App and Azure Function.
+Because this app has sending email which is good to place into the background process, we need to split the sending email and the web app itself. The web app only does listing and sending queue, the Free Tier is enough for doing this since the web traffic is not really high. The cost will move to the background process, it will depend on how much we send the email, and how many attendees, if the attendee is quite many, that will affect execution time which increases the monthly cost. But, the Azure Function App is quite cheap and we do not suffer the web app to have more high resources.
